@@ -74,10 +74,10 @@ QuadPlane::QuadPlane(const char *frame_str) :
         // fwd motor gives zero thrust
         thrust_scale = 0;
     } else if (strstr(frame_str, "-copter_tailsitter")) {
-        frame_type = "+";
         copter_tailsitter = true;
         ground_behavior = GROUND_BEHAVIOR_TAILSITTER;
         thrust_scale *= 1.5;
+	 motor_offset = 0;
     }
     frame = Frame::find_frame(frame_type);
     if (frame == nullptr) {
