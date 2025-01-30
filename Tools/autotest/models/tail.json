@@ -1,46 +1,8 @@
 {
-    "name": "bagnet",
-    "type": "tailsitter",
-    "frame": "quad",               // Рама: quad (чотири мотори)
-    "mass": 4.5,                   // Маса дрона (в кг)
-    "motors": {
-        "count": 4,                // Кількість моторів
-        "layout": "x",             // Розташування моторів (X-подібне)
-        "max_rpm": 16000,          // Максимальні оберти моторів
-        "motor_type": "brushless", // Тип моторів: безщіткові
-        "propellers": {
-            "diameter": 8,        // Діаметр пропелерів (у дюймах)
-            "pitch": 6             // Крок пропелерів (у дюймах)
-        }
-    },
-    "battery": {
-        "voltage": 25,           // Напруга батареї (в В)
-        "capacity_mah": 1300,      // Ємність батареї (в мА·год)
-        "cells": 6                 // Кількість осередків батареї (4S)
-    },
-    "aerodynamics": {
-        "drag_coefficient": 0.05,  // Аеродинамічний коефіцієнт опору
-        "lift_coefficient": 0.8,   // Коефіцієнт підйомної сили
-        "wing_area": 0.076           // Площа крила (у м²)
-    },
-    "tailsitter": {
-        "mode": "copter",          // Режим copter (враховує вертикальну посадку)
-        "ground_behavior": "TAILSITTER",  // Поведінка на землі
-        "thrust_scale": 1.5        // Масштабування тяги для VTOL
-    },
-    "controller": {
-        "type": "Pixhawk",         // Тип контролера
-        "pid": {
-            "kp_roll": 0.15,       // PID-коефіцієнт для ролу
-            "ki_roll": 0.01,
-            "kd_roll": 0.05,
-            "kp_pitch": 0.15,      // PID-коефіцієнт для тангажу
-            "ki_pitch": 0.01,
-            "kd_pitch": 0.05
-        }
-    },
-    "gps": {
-        "type": "u-blox",          // Тип GPS
-        "accuracy": 3              // Точність GPS (у метрах)
-    }
+    "mass" : 4.5,
+	"diagonal_size" : 0.5,
+	"maxVoltage" : 25.2,
+	"battCapacityAh" : 13000,
+	"disc_area" : 0.206,
+	"num_motors" : 4
 }
