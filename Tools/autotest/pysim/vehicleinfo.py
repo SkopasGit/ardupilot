@@ -334,12 +334,7 @@ class VehicleInfo(object):
             "tail": {
                 "model": "quadplane-copter_tailsitter:@ROMFS/models/tail.json",
                 "waf_target": "bin/arduplane",
-                "default_params_filename": [
-                    "default_params/quadplane.parm",
-					"default_params/quadplane-copter_tailsitter.parm",
-                    "default_params/copter-octaquad.parm",
-                    "models/tail.param",
-                    ],
+                "default_params_filename": ["default_params/quadplane.parm","default_params/quadplane-copter_tailsitter.parm","default_params/copter-octaquad.parm","models/tail.parm",],
             },
             "plane": {
                 "waf_target": "bin/arduplane",
