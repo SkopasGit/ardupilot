@@ -45,6 +45,7 @@ public:
         QLOITER       = 19,
         QLAND         = 20,
         QRTL          = 21,
+        QTAKEOFF      = 100,
 #if QAUTOTUNE_ENABLED
         QAUTOTUNE     = 22,
 #endif
@@ -609,6 +610,9 @@ private:
 
 class ModeQHover : public Mode
 {
+    friend class QuadPlane;
+    friend class ModeQTakeOff;   
+    friend class Plane; 
 public:
 
     Number mode_number() const override { return Number::QHOVER; }
@@ -632,7 +636,9 @@ class ModeQLoiter : public Mode
 {
 friend class QuadPlane;
 friend class ModeQLand;
+
 friend class Plane;
+
 
 public:
 
@@ -670,6 +676,33 @@ public:
 
 protected:
 
+    bool _enter() override;
+    bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
+};
+
+class ModeQTakeOff : public Mode
+{
+public:
+    Number mode_number() const override { return Number::QTAKEOFF; }
+    const char *name() const override { return "QTAKEOFF"; }
+    const char *name4() const override { return "QTKF"; }
+
+    bool is_vtol_mode() const override { return true; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+
+    void run() override;
+     // var_info for holding parameter information
+ 
+   protected:
+  
+   int16_t target_alt_with_sea;
+   int16_t level_alt_cm; 
+   //bool takeoff_started;
+   //Location start_loc;
+
+   
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 };
