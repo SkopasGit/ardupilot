@@ -63,7 +63,8 @@ ModeTakeoff::ModeTakeoff() :
 bool ModeTakeoff::_enter()
 {
     #if HAL_QUADPLANE_ENABLED
-    plane.set_mode(Mode::QTAKEOFF, ModeReason::MISSION_CMD);
+     return plane.set_mode(Mode::QTAKEOFF, ModeReason::MISSION_CMD);
+     
     #endif
     takeoff_started = false;
 
