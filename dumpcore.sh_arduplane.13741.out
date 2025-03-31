@@ -1,0 +1,21 @@
+[New LWP 13750]
+[New LWP 13751]
+[New LWP 13752]
+[New LWP 13753]
+[New LWP 13755]
+[New LWP 13756]
+[New LWP 13757]
+[New LWP 13759]
+[New LWP 13762]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f0534b7e7f8 in __GI___clock_nanosleep (clock_id=clock_id@entry=0, flags=flags@entry=0, req=req@entry=0x7ffde91fc100, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+warning: target file /proc/13741/cmdline contained unexpected null characters
+Saved corefile ap-13780.core
+A debugging session is active.
+
+	Inferior 1 [process 13741] will be detached.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 13741) detached]

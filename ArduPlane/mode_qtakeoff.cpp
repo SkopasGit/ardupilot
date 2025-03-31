@@ -22,18 +22,20 @@ bool ModeQTakeOff::_enter()
     
     target_alt_with_sea = plane.mode_takeoff.target_alt.get();
    
-    gcs().send_text(MAV_SEVERITY_INFO, "Q_TAKEOFF: ALT:  %hd%%", target_alt_with_sea);
+    gcs().send_text(MAV_SEVERITY_INFO, "Q_TAKEOFF: ALT:  %d m", target_alt_with_sea);
     
     // Встановлюємо режим QHOVER для вертикального зльоту
   if (!(plane.current_loc.initialised() && AP::ahrs().home_is_set() && target_alt_with_sea > 50)) {
         gcs().send_text(MAV_SEVERITY_WARNING, "Q_TAKEOFF: No GPS lock! or Target ALT is low");
         return false ;
     }
-  //  quadplane.throttle_wait = false;
+     //  quadplane.throttle_wait = false;
    // SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, plane.g2);
   // SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, quadplane.motors->get_throttle_hover());
    plane.mode_qhover._enter();
     level_alt_cm=plane.mode_takeoff.level_alt.get()* 100;
+    //SRV_Channels::set_output_scaled(SRV_Channel::k_throttle, 0.5);
+
     //target_alt_with_sea=qtarget_alt.get()*100;
     //  float hover_throttle = quadplane.motors->get_throttle_hover();
     // attitude_control->set_throttle_out(hover_throttle, true, 0);

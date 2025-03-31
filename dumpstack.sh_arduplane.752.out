@@ -1,0 +1,549 @@
+[New LWP 759]
+[New LWP 760]
+[New LWP 761]
+[New LWP 762]
+[New LWP 764]
+[New LWP 765]
+[New LWP 766]
+[New LWP 769]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007fd9a35177f8 in __GI___clock_nanosleep (clock_id=clock_id@entry=0, flags=flags@entry=0, req=req@entry=0x7ffc0424f440, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+#0  0x00007fd9a35177f8 in __GI___clock_nanosleep (clock_id=clock_id@entry=0, flags=flags@entry=0, req=req@entry=0x7ffc0424f440, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        r = <optimized out>
+#1  0x00007fd9a351c677 in __GI___nanosleep (req=req@entry=0x7ffc0424f440, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/nanosleep.c:25
+        ret = <optimized out>
+#2  0x00007fd9a354df2f in usleep (useconds=<optimized out>) at ../sysdeps/posix/usleep.c:31
+        ts = {tv_sec = 0, tv_nsec = 5593000}
+#3  0x00005624b0a6aacf in SITL::Aircraft::sync_frame_time() ()
+No symbol table info available.
+#4  0x00005624b0a8ac54 in SITL::QuadPlane::update(sitl_input const&) ()
+No symbol table info available.
+#5  0x00005624b0a5de1a in HALSITL::SITL_State::_fdm_input_local() [clone .part.0] ()
+No symbol table info available.
+#6  0x00005624b0a5e127 in HALSITL::SITL_State::_fdm_input_step() ()
+No symbol table info available.
+#7  0x00005624b0a5e297 in HALSITL::SITL_State::wait_clock(unsigned long) ()
+No symbol table info available.
+#8  0x00005624b0a60dec in HALSITL::Scheduler::delay(unsigned short) ()
+No symbol table info available.
+#9  0x00005624b08eddfe in AP_Baro::calibrate(bool) ()
+No symbol table info available.
+#10 0x00005624b08db736 in Plane::init_ardupilot() ()
+No symbol table info available.
+#11 0x00005624b098d8f6 in AP_Vehicle::setup() ()
+No symbol table info available.
+#12 0x00005624b0a5b66d in HAL_SITL::run(int, char* const*, AP_HAL::HAL::Callbacks*) const ()
+No symbol table info available.
+#13 0x00005624b08af034 in main ()
+No symbol table info available.
+
+Thread 9 (Thread 0x7fd98d36d640 (LWP 769) "log_io"):
+#0  0x00007fd9a35177f8 in __GI___clock_nanosleep (clock_id=clock_id@entry=0, flags=flags@entry=0, req=req@entry=0x7fd98d36cc40, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        r = <optimized out>
+#1  0x00007fd9a351c677 in __GI___nanosleep (req=req@entry=0x7fd98d36cc40, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/nanosleep.c:25
+        ret = <optimized out>
+#2  0x00007fd9a354df2f in usleep (useconds=<optimized out>) at ../sysdeps/posix/usleep.c:31
+        ts = {tv_sec = 0, tv_nsec = 1000000}
+#3  0x00005624b0a5e30a in HALSITL::SITL_State::wait_clock(unsigned long) ()
+No symbol table info available.
+#4  0x00005624b0a60735 in HALSITL::Scheduler::delay_microseconds(unsigned short) ()
+No symbol table info available.
+#5  0x00005624b0992bd4 in AP_Logger::io_thread() ()
+No symbol table info available.
+#6  0x00005624b0992e7f in void Functor<void>::method_wrapper<AP_Logger, &AP_Logger::io_thread>(void*) ()
+No symbol table info available.
+#7  0x00005624b0a60804 in HALSITL::Scheduler::thread_create_trampoline(void*) ()
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378016800, -4911873979888311915, 140572353812032, 11, 140572724324304, 140720378017152, 4928801450525843861, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 8 (Thread 0x7fd98db6e640 (LWP 766) "OSD"):
+#0  0x00007fd9a351c42f in __GI___wait4 (pid=767, stat_loc=stat_loc@entry=0x7fd98db6c648, options=options@entry=0, usage=usage@entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+        sc_ret = -512
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+#1  0x00007fd9a351c3ab in __GI___waitpid (pid=<optimized out>, stat_loc=stat_loc@entry=0x7fd98db6c648, options=options@entry=0) at ./posix/waitpid.c:38
+No locals.
+#2  0x00007fd9a3482bdb in do_system (line=<optimized out>) at ../sysdeps/posix/system.c:171
+        __result = <optimized out>
+        _cleanup_start_doit = true
+        _buffer = {__routine = 0x7fd9a3482c60 <cancel_handler>, __arg = 0x7fd98db6c650, __canceltype = 0, __prev = 0x0}
+        _cleanup_routine = 0x7fd9a3482c60 <cancel_handler>
+        cancel_args = {quit = 0x7fd9a364e7a0 <quit>, intr = 0x7fd9a364e840 <intr>, pid = 767}
+        status = -1
+        ret = 0
+        pid = 767
+        sa = {__sigaction_handler = {sa_handler = 0x1, sa_sigaction = 0x1}, sa_mask = {__val = {65536, 0, 0, 0, 0, 549755813888, 0, 549755813888, 0, 549755813888, 0, 18446744073709551615, 0, 18446744073709551615, 0, 18446744073709551615}}, sa_flags = 0, sa_restorer = 0xffffffff}
+        omask = {__val = {1024, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 140572362197920, 3617859283187059815, 1660455195340758528, 140572362197920, 2}}
+        reset = {__val = {6, 199, 140572362196848, 94715583746793, 140572362197232, 140572724274330, 140572362197248, 140572362197088, 140574207082497, 140572362197920, 140572362197920, 140572362197920, 140572362197920, 140572362197990, 140572362198119, 140572362197920}}
+        spawn_attr = {__flags = 12, __pgrp = 0, __sd = {__val = {6, 199, 140572362196848, 94715583746793, 140572362197232, 140572724274330, 140572362197248, 140572362197088, 140574207082497, 140572362197920, 140572362197920, 140572362197920, 140572362197920, 140572362197990, 140572362198119, 140572362197920}}, __ss = {__val = {1024, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 140572362197920, 3617859283187059815, 1660455195340758528, 140572362197920, 2}}, __sp = {sched_priority = 0}, __policy = 0, __pad = {0 <repeats 16 times>}}
+#3  0x00005624b0a6228d in AP_HAL::run_command_on_ownpid(char const*) ()
+No symbol table info available.
+#4  0x00005624b0a62acc in _sig_segv(int) ()
+No symbol table info available.
+#5  <signal handler called>
+No locals.
+#6  0x00005624b0a3a89f in AP_OSD::osd_thread() ()
+No symbol table info available.
+#7  0x00005624b0a3adcf in void Functor<void>::method_wrapper<AP_OSD, &AP_OSD::osd_thread>(void*) ()
+No symbol table info available.
+#8  0x00005624b0a60804 in HALSITL::Scheduler::thread_create_trampoline(void*) ()
+No symbol table info available.
+#9  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378016800, -4911873979888311915, 140572362204736, 11, 140572724324304, 140720378017152, 4928802549500600725, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#10 0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 7 (Thread 0x7fd98e36f640 (LWP 765) "arduplane"):
+#0  __GI___ioctl (fd=14, request=3224913674) at ../sysdeps/unix/sysv/linux/ioctl.c:36
+        args = {{gp_offset = 16, fp_offset = 0, overflow_arg_area = 0x7fd98e36de50, reg_save_area = 0x7fd98e36de10}}
+        arg = <optimized out>
+        r = 0
+#1  0x00007fd997a63df8 in D3DKMTQueryVideoMemoryInfo () from /usr/lib/wsl/lib/libdxcore.so
+No symbol table info available.
+#2  0x00007fd997a2e694 in ?? () from /usr/lib/wsl/lib/libdxcore.so
+No symbol table info available.
+#3  0x00007fd9979ec258 in ?? () from /usr/lib/wsl/lib/libdxcore.so
+No symbol table info available.
+#4  0x00007fd9a18da7b3 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#5  0x00007fd9a1900971 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#6  0x00007fd9a192b383 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#7  0x00007fd9a18e7d74 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#8  0x00007fd9a139a169 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#9  0x00007fd9a0e97217 in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#10 0x00007fd9a39e7d5d in sf::Texture::update(unsigned char const*, unsigned int, unsigned int, unsigned int, unsigned int) () from /lib/x86_64-linux-gnu/libsfml-graphics.so.2.5
+No symbol table info available.
+#11 0x00005624b0a3bdf1 in AP_OSD_SITL::load_font() ()
+No symbol table info available.
+#12 0x00005624b0a3bec2 in AP_OSD_SITL::update_thread() ()
+No symbol table info available.
+#13 0x00005624b0a3c22d in AP_OSD_SITL::update_thread_start(void*) ()
+No symbol table info available.
+#14 0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378016912, -4911873979888311915, 140572370597440, 11, 140572724324304, 140720378017264, 4928794854529819029, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#15 0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 6 (Thread 0x7fd98eb70640 (LWP 764) "arduplan:gdrv0"):
+#0  __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5624b5cc6198) at ./nptl/futex-internal.c:57
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        resultvar = <optimized out>
+        __arg6 = <optimized out>
+        __arg5 = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a6 = <optimized out>
+        _a5 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5624b5cc6198) at ./nptl/futex-internal.c:87
+        err = <optimized out>
+        clockbit = 256
+        op = 393
+        err = <optimized out>
+        clockbit = <optimized out>
+        op = <optimized out>
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5624b5cc6198, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+No locals.
+#3  0x00007fd9a34c5a41 in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5624b5cc6148, cond=0x5624b5cc6170) at ./nptl/pthread_cond_wait.c:503
+        spin = 0
+        buffer = {__routine = 0x7fd9a34c5720 <__condvar_cleanup_waiting>, __arg = 0x7fd98eb6fc80, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 0, cond = 0x5624b5cc6170, mutex = 0x5624b5cc6148, private = 0}
+        err = <optimized out>
+        g = 0
+        flags = <optimized out>
+        g1_start = <optimized out>
+        maxspin = 0
+        signals = <optimized out>
+        result = 0
+        wseq = 0
+        seq = 0
+        private = 0
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        done = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#4  ___pthread_cond_wait (cond=0x5624b5cc6170, mutex=0x5624b5cc6148) at ./nptl/pthread_cond_wait.c:627
+No locals.
+#5  0x00007fd9a0e4752d in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#6  0x00007fd9a0df78bb in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#7  0x00007fd9a0e4745b in ?? () from /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378014512, -4911873979888311915, 140572378990144, 2, 140572724324304, 140720378014864, 4928795953504575893, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 5 (Thread 0x7fd98f7fc640 (LWP 762) "arduplane"):
+#0  __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:57
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        resultvar = <optimized out>
+        __arg6 = <optimized out>
+        __arg5 = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a6 = <optimized out>
+        _a5 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:87
+        err = <optimized out>
+        clockbit = 256
+        op = 393
+        err = <optimized out>
+        clockbit = <optimized out>
+        op = <optimized out>
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5624b5c12abc, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+No locals.
+#3  0x00007fd9a34c5a41 in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5624b5b7e3b0, cond=0x5624b5c12a90) at ./nptl/pthread_cond_wait.c:503
+        spin = 0
+        buffer = {__routine = 0x7fd9a34c5720 <__condvar_cleanup_waiting>, __arg = 0x7fd98f7fbd20, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 13, cond = 0x5624b5c12a90, mutex = 0x5624b5b7e3b0, private = 0}
+        err = <optimized out>
+        g = 1
+        flags = <optimized out>
+        g1_start = <optimized out>
+        maxspin = 0
+        signals = <optimized out>
+        result = 0
+        wseq = 13
+        seq = 6
+        private = 0
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        done = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#4  ___pthread_cond_wait (cond=0x5624b5c12a90, mutex=0x5624b5b7e3b0) at ./nptl/pthread_cond_wait.c:627
+No locals.
+#5  0x00007fd9975c474f in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#6  0x00007fd99790f62b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#7  0x00007fd99790fe0b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378011056, -4911873979888311915, 140572392146496, 75, 140572724324304, 140720378011408, 4928796565537415573, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 4 (Thread 0x7fd98fffd640 (LWP 761) "arduplane"):
+#0  __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:57
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        resultvar = <optimized out>
+        __arg6 = <optimized out>
+        __arg5 = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a6 = <optimized out>
+        _a5 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:87
+        err = <optimized out>
+        clockbit = 256
+        op = 393
+        err = <optimized out>
+        clockbit = <optimized out>
+        op = <optimized out>
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5624b5c12abc, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+No locals.
+#3  0x00007fd9a34c5a41 in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5624b5b7e3b0, cond=0x5624b5c12a90) at ./nptl/pthread_cond_wait.c:503
+        spin = 0
+        buffer = {__routine = 0x7fd9a34c5720 <__condvar_cleanup_waiting>, __arg = 0x7fd98fffcd20, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 9, cond = 0x5624b5c12a90, mutex = 0x5624b5b7e3b0, private = 0}
+        err = <optimized out>
+        g = 1
+        flags = <optimized out>
+        g1_start = <optimized out>
+        maxspin = 0
+        signals = <optimized out>
+        result = 0
+        wseq = 9
+        seq = 4
+        private = 0
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        done = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#4  ___pthread_cond_wait (cond=0x5624b5c12a90, mutex=0x5624b5b7e3b0) at ./nptl/pthread_cond_wait.c:627
+No locals.
+#5  0x00007fd9975c474f in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#6  0x00007fd99790f62b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#7  0x00007fd99790fe0b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378011056, -4911873979888311915, 140572400539200, 75, 140572724324304, 140720378011408, 4928797662364688789, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 3 (Thread 0x7fd9907fe640 (LWP 760) "arduplane"):
+#0  __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:57
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        resultvar = <optimized out>
+        __arg6 = <optimized out>
+        __arg5 = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a6 = <optimized out>
+        _a5 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:87
+        err = <optimized out>
+        clockbit = 256
+        op = 393
+        err = <optimized out>
+        clockbit = <optimized out>
+        op = <optimized out>
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5624b5c12abc, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+No locals.
+#3  0x00007fd9a34c5a41 in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5624b5b7e3b0, cond=0x5624b5c12a90) at ./nptl/pthread_cond_wait.c:503
+        spin = 0
+        buffer = {__routine = 0x7fd9a34c5720 <__condvar_cleanup_waiting>, __arg = 0x7fd9907fdd20, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 11, cond = 0x5624b5c12a90, mutex = 0x5624b5b7e3b0, private = 0}
+        err = <optimized out>
+        g = 1
+        flags = <optimized out>
+        g1_start = <optimized out>
+        maxspin = 0
+        signals = <optimized out>
+        result = 0
+        wseq = 11
+        seq = 5
+        private = 0
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        done = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#4  ___pthread_cond_wait (cond=0x5624b5c12a90, mutex=0x5624b5b7e3b0) at ./nptl/pthread_cond_wait.c:627
+No locals.
+#5  0x00007fd9975c474f in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#6  0x00007fd99790f62b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#7  0x00007fd99790fe0b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378011056, -4911873979888311915, 140572408931904, 75, 140572724324304, 140720378011408, 4928807557432467861, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 2 (Thread 0x7fd990fff640 (LWP 759) "arduplane"):
+#0  __futex_abstimed_wait_common64 (private=0, cancel=true, abstime=0x0, op=393, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:57
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        resultvar = <optimized out>
+        __arg6 = <optimized out>
+        __arg5 = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a6 = <optimized out>
+        _a5 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#1  __futex_abstimed_wait_common (cancel=true, private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5624b5c12abc) at ./nptl/futex-internal.c:87
+        err = <optimized out>
+        clockbit = 256
+        op = 393
+        err = <optimized out>
+        clockbit = <optimized out>
+        op = <optimized out>
+#2  __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x5624b5c12abc, expected=expected@entry=0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+No locals.
+#3  0x00007fd9a34c5a41 in __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x5624b5b7e3b0, cond=0x5624b5c12a90) at ./nptl/pthread_cond_wait.c:503
+        spin = 0
+        buffer = {__routine = 0x7fd9a34c5720 <__condvar_cleanup_waiting>, __arg = 0x7fd990ffed20, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 15, cond = 0x5624b5c12a90, mutex = 0x5624b5b7e3b0, private = 0}
+        err = <optimized out>
+        g = 1
+        flags = <optimized out>
+        g1_start = <optimized out>
+        maxspin = 0
+        signals = <optimized out>
+        result = 0
+        wseq = 15
+        seq = 7
+        private = 0
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        done = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#4  ___pthread_cond_wait (cond=0x5624b5c12a90, mutex=0x5624b5b7e3b0) at ./nptl/pthread_cond_wait.c:627
+No locals.
+#5  0x00007fd9975c474f in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#6  0x00007fd99790f62b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#7  0x00007fd99790fe0b in ?? () from /usr/lib/wsl/lib/libd3d12core.so
+No symbol table info available.
+#8  0x00007fd9a34c6ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140720378011056, -4911873979888311915, 140572417324608, 75, 140572724324304, 140720378011408, 4928808658554708373, 4928840402586821013}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#9  0x00007fd9a3558850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+No locals.
+
+Thread 1 (Thread 0x7fd9a2f6fbc0 (LWP 752) "arduplane"):
+#0  0x00007fd9a35177f8 in __GI___clock_nanosleep (clock_id=clock_id@entry=0, flags=flags@entry=0, req=req@entry=0x7ffc0424f440, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+        sc_cancel_oldtype = 0
+        sc_ret = <optimized out>
+        r = <optimized out>
+#1  0x00007fd9a351c677 in __GI___nanosleep (req=req@entry=0x7ffc0424f440, rem=rem@entry=0x0) at ../sysdeps/unix/sysv/linux/nanosleep.c:25
+        ret = <optimized out>
+#2  0x00007fd9a354df2f in usleep (useconds=<optimized out>) at ../sysdeps/posix/usleep.c:31
+        ts = {tv_sec = 0, tv_nsec = 5593000}
+#3  0x00005624b0a6aacf in SITL::Aircraft::sync_frame_time() ()
+No symbol table info available.
+#4  0x00005624b0a8ac54 in SITL::QuadPlane::update(sitl_input const&) ()
+No symbol table info available.
+#5  0x00005624b0a5de1a in HALSITL::SITL_State::_fdm_input_local() [clone .part.0] ()
+No symbol table info available.
+#6  0x00005624b0a5e127 in HALSITL::SITL_State::_fdm_input_step() ()
+No symbol table info available.
+#7  0x00005624b0a5e297 in HALSITL::SITL_State::wait_clock(unsigned long) ()
+No symbol table info available.
+#8  0x00005624b0a60dec in HALSITL::Scheduler::delay(unsigned short) ()
+No symbol table info available.
+#9  0x00005624b08eddfe in AP_Baro::calibrate(bool) ()
+No symbol table info available.
+#10 0x00005624b08db736 in Plane::init_ardupilot() ()
+No symbol table info available.
+#11 0x00005624b098d8f6 in AP_Vehicle::setup() ()
+No symbol table info available.
+#12 0x00005624b0a5b66d in HAL_SITL::run(int, char* const*, AP_HAL::HAL::Callbacks*) const ()
+No symbol table info available.
+#13 0x00005624b08af034 in main ()
+No symbol table info available.
+A debugging session is active.
+
+	Inferior 1 [process 752] will be detached.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 752) detached]

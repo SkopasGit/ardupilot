@@ -59,6 +59,15 @@ ModeTakeoff::ModeTakeoff() :
 {
     AP_Param::setup_object_defaults(this, var_info);
 }
+int16_t ModeTakeoff::get_target_dist()
+{
+    if (target_dist<50){
+        return 50;
+    }else{
+        return target_dist;
+    }
+
+}
 
 bool ModeTakeoff::_enter()
 {

@@ -16,42 +16,42 @@ class AC_Loiter;
 class Mode
 {
 public:
-
     /* Do not allow copies */
     CLASS_NO_COPY(Mode);
 
     // Auto Pilot modes
     // ----------------
-    enum Number : uint8_t {
-        MANUAL        = 0,
-        CIRCLE        = 1,
-        STABILIZE     = 2,
-        TRAINING      = 3,
-        ACRO          = 4,
+    enum Number : uint8_t
+    {
+        MANUAL = 0,
+        CIRCLE = 1,
+        STABILIZE = 2,
+        TRAINING = 3,
+        ACRO = 4,
         FLY_BY_WIRE_A = 5,
         FLY_BY_WIRE_B = 6,
-        CRUISE        = 7,
-        AUTOTUNE      = 8,
-        AUTO          = 10,
-        RTL           = 11,
-        LOITER        = 12,
-        TAKEOFF       = 13,
-        AVOID_ADSB    = 14,
-        GUIDED        = 15,
-        INITIALISING  = 16,
+        CRUISE = 7,
+        AUTOTUNE = 8,
+        AUTO = 10,
+        RTL = 11,
+        LOITER = 12,
+        TAKEOFF = 13,
+        AVOID_ADSB = 14,
+        GUIDED = 15,
+        INITIALISING = 16,
 #if HAL_QUADPLANE_ENABLED
-        QSTABILIZE    = 17,
-        QHOVER        = 18,
-        QLOITER       = 19,
-        QLAND         = 20,
-        QRTL          = 21,
-        QTAKEOFF      = 100,
+        QSTABILIZE = 17,
+        QHOVER = 18,
+        QLOITER = 19,
+        QLAND = 20,
+        QRTL = 21,
+        QTAKEOFF = 100,
 #if QAUTOTUNE_ENABLED
-        QAUTOTUNE     = 22,
+        QAUTOTUNE = 22,
 #endif
-        QACRO         = 23,
+        QACRO = 23,
 #endif
-        THERMAL       = 24,
+        THERMAL = 24,
 #if HAL_QUADPLANE_ENABLED
         LOITER_ALT_QLAND = 25,
 #endif
@@ -103,7 +103,7 @@ public:
     virtual bool allows_terrain_disable() const { return false; }
 
     // true if automatic switch to thermal mode is supported.
-    virtual bool does_automatic_thermal_switch() const {return false; }
+    virtual bool does_automatic_thermal_switch() const { return false; }
 
     // subclasses override this if they require navigation.
     virtual void navigate() { return; }
@@ -119,7 +119,7 @@ public:
     // true if the mode sets the vehicle destination, which controls
     // whether control input is ignored with STICK_MIXING=0
     virtual bool does_auto_throttle() const { return false; }
-    
+
     // true if the mode supports autotuning (via switch for modes other
     // that AUTOTUNE itself
     virtual bool mode_allows_autotuning() const { return false; }
@@ -130,10 +130,10 @@ public:
     // handle a guided target request from GCS
     virtual bool handle_guided_request(Location target_loc) { return false; }
 
-    // true if is landing 
+    // true if is landing
     virtual bool is_landing() const { return false; }
 
-    // true if is taking 
+    // true if is taking
     virtual bool is_taking_off() const;
 
     // true if throttle min/max limits should be applied
@@ -143,7 +143,6 @@ public:
     bool use_battery_compensation() const;
 
 protected:
-
     // subclasses override this to perform checks before entering the mode
     virtual bool _enter() { return true; }
 
@@ -158,21 +157,20 @@ protected:
 
 #if HAL_QUADPLANE_ENABLED
     // References for convenience, used by QModes
-    AC_PosControl*& pos_control;
-    AC_AttitudeControl_Multi*& attitude_control;
-    AC_Loiter*& loiter_nav;
-    QuadPlane& quadplane;
+    AC_PosControl *&pos_control;
+    AC_AttitudeControl_Multi *&attitude_control;
+    AC_Loiter *&loiter_nav;
+    QuadPlane &quadplane;
     QuadPlane::PosControlState &poscontrol;
 #endif
-    AP_AHRS& ahrs;
+    AP_AHRS &ahrs;
 };
-
 
 class ModeAcro : public Mode
 {
-friend class ModeQAcro;
-public:
+    friend class ModeQAcro;
 
+public:
     Mode::Number mode_number() const override { return Mode::Number::ACRO; }
     const char *name() const override { return "ACRO"; }
     const char *name4() const override { return "ACRO"; }
@@ -187,9 +185,9 @@ public:
     void stabilize_quaternion();
 
 protected:
-
     // ACRO controller state
-    struct {
+    struct
+    {
         bool locked_roll;
         bool locked_pitch;
         float locked_roll_err;
@@ -206,7 +204,6 @@ protected:
 class ModeAuto : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::AUTO; }
     const char *name() const override { return "AUTO"; }
     const char *name4() const override { return "AUTO"; }
@@ -223,55 +220,49 @@ public:
     bool does_auto_navigation() const override;
 
     bool does_auto_throttle() const override;
-    
+
     bool mode_allows_autotuning() const override { return true; }
 
     bool is_landing() const override;
 
-    void do_nav_delay(const AP_Mission::Mission_Command& cmd);
-    bool verify_nav_delay(const AP_Mission::Mission_Command& cmd);
+    void do_nav_delay(const AP_Mission::Mission_Command &cmd);
+    bool verify_nav_delay(const AP_Mission::Mission_Command &cmd);
 
     void run() override;
 
 protected:
-
     bool _enter() override;
     void _exit() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override;
 
 private:
-
     // Delay the next navigation command
-    struct {
+    struct
+    {
         uint32_t time_max_ms;
         uint32_t time_start_ms;
     } nav_delay;
-
 };
-
 
 class ModeAutoTune : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::AUTOTUNE; }
     const char *name() const override { return "AUTOTUNE"; }
     const char *name4() const override { return "ATUN"; }
 
     // methods that affect movement of the vehicle in this mode
     void update() override;
-    
+
     bool mode_allows_autotuning() const override { return true; }
 
 protected:
-
     bool _enter() override;
 };
 
 class ModeGuided : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::GUIDED; }
     const char *name() const override { return "GUIDED"; }
     const char *name4() const override { return "GUID"; }
@@ -297,7 +288,6 @@ public:
     void update_target_altitude() override;
 
 protected:
-
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return true; }
 
@@ -305,10 +295,9 @@ private:
     float active_radius_m;
 };
 
-class ModeCircle: public Mode
+class ModeCircle : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::CIRCLE; }
     const char *name() const override { return "CIRCLE"; }
     const char *name4() const override { return "CIRC"; }
@@ -321,14 +310,12 @@ public:
     bool does_auto_throttle() const override { return true; }
 
 protected:
-
     bool _enter() override;
 };
 
 class ModeLoiter : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::LOITER; }
     const char *name() const override { return "LOITER"; }
     const char *name4() const override { return "LOIT"; }
@@ -350,11 +337,10 @@ public:
     bool allows_terrain_disable() const override { return true; }
 
     void update_target_altitude() override;
-    
+
     bool mode_allows_autotuning() const override { return true; }
 
 protected:
-
     bool _enter() override;
 };
 
@@ -362,7 +348,6 @@ protected:
 class ModeLoiterAltQLand : public ModeLoiter
 {
 public:
-
     Number mode_number() const override { return Number::LOITER_ALT_QLAND; }
     const char *name() const override { return "Loiter to QLAND"; }
     const char *name4() const override { return "L2QL"; }
@@ -377,14 +362,12 @@ protected:
 
 private:
     void switch_qland();
-
 };
 #endif // HAL_QUADPLANE_ENABLED
 
 class ModeManual : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::MANUAL; }
     const char *name() const override { return "MANUAL"; }
     const char *name4() const override { return "MANU"; }
@@ -395,11 +378,9 @@ public:
     void run() override;
 };
 
-
 class ModeRTL : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::RTL; }
     const char *name() const override { return "RTL"; }
     const char *name4() const override { return "RTL "; }
@@ -416,12 +397,10 @@ public:
     bool does_auto_throttle() const override { return true; }
 
 protected:
-
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 
 private:
-
     // Switch to QRTL if enabled and within radius
     bool switch_QRTL();
 };
@@ -429,7 +408,6 @@ private:
 class ModeStabilize : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::STABILIZE; }
     const char *name() const override { return "STABILIZE"; }
     const char *name4() const override { return "STAB"; }
@@ -441,13 +419,11 @@ public:
 
 private:
     void stabilize_stick_mixing_direct();
-
 };
 
 class ModeTraining : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::TRAINING; }
     const char *name() const override { return "TRAINING"; }
     const char *name4() const override { return "TRAN"; }
@@ -456,13 +432,11 @@ public:
     void update() override;
 
     void run() override;
-
 };
 
 class ModeInitializing : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::INITIALISING; }
     const char *name() const override { return "INITIALISING"; }
     const char *name4() const override { return "INIT"; }
@@ -470,7 +444,7 @@ public:
     bool _enter() override { return false; }
 
     // methods that affect movement of the vehicle in this mode
-    void update() override { }
+    void update() override {}
 
     bool allows_throttle_nudging() const override { return true; }
 
@@ -478,28 +452,24 @@ public:
 
 protected:
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
-
 };
 
 class ModeFBWA : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::FLY_BY_WIRE_A; }
     const char *name() const override { return "FLY_BY_WIRE_A"; }
     const char *name4() const override { return "FBWA"; }
 
     // methods that affect movement of the vehicle in this mode
     void update() override;
-    
-    bool mode_allows_autotuning() const override { return true; }
 
+    bool mode_allows_autotuning() const override { return true; }
 };
 
 class ModeFBWB : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::FLY_BY_WIRE_B; }
     const char *name() const override { return "FLY_BY_WIRE_B"; }
     const char *name4() const override { return "FBWB"; }
@@ -512,20 +482,20 @@ public:
     void update() override;
 
     bool does_auto_throttle() const override { return true; }
-    
+
     bool mode_allows_autotuning() const override { return true; }
 
     void update_target_altitude() override {};
 
 protected:
-
+    uint32_t ekf_stable_start_ms = 0; // момент, коли EKF3 став стабільним
+    bool gps_disabled = false;        // чи вже вимкнули GPS
     bool _enter() override;
 };
 
 class ModeCruise : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::CRUISE; }
     const char *name() const override { return "CRUISE"; }
     const char *name4() const override { return "CRUS"; }
@@ -546,7 +516,6 @@ public:
     void update_target_altitude() override {};
 
 protected:
-
     bool _enter() override;
 
     bool locked_heading;
@@ -558,7 +527,6 @@ protected:
 class ModeAvoidADSB : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::AVOID_ADSB; }
     const char *name() const override { return "AVOID_ADSB"; }
     const char *name4() const override { return "AVOI"; }
@@ -573,7 +541,6 @@ public:
     bool does_auto_throttle() const override { return true; }
 
 protected:
-
     bool _enter() override;
 };
 #endif
@@ -582,7 +549,6 @@ protected:
 class ModeQStabilize : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::QSTABILIZE; }
     const char *name() const override { return "QSTABILIZE"; }
     const char *name4() const override { return "QSTB"; }
@@ -602,19 +568,17 @@ public:
 
 protected:
 private:
-
     void set_tailsitter_roll_pitch(const float roll_input, const float pitch_input);
     void set_limited_roll_pitch(const float roll_input, const float pitch_input);
-
 };
 
 class ModeQHover : public Mode
 {
     friend class QuadPlane;
-    friend class ModeQTakeOff;   
-    friend class Plane; 
-public:
+    friend class ModeQTakeOff;
+    friend class Plane;
 
+public:
     Number mode_number() const override { return Number::QHOVER; }
     const char *name() const override { return "QHOVER"; }
     const char *name4() const override { return "QHOV"; }
@@ -628,20 +592,17 @@ public:
     void run() override;
 
 protected:
-
     bool _enter() override;
 };
 
 class ModeQLoiter : public Mode
 {
-friend class QuadPlane;
-friend class ModeQLand;
+    friend class QuadPlane;
+    friend class ModeQLand;
 
-friend class Plane;
-
+    friend class Plane;
 
 public:
-
     Number mode_number() const override { return Number::QLOITER; }
     const char *name() const override { return "QLOITER"; }
     const char *name4() const override { return "QLOT"; }
@@ -655,7 +616,6 @@ public:
     void run() override;
 
 protected:
-
     bool _enter() override;
     uint32_t last_target_loc_set_ms;
 };
@@ -675,7 +635,6 @@ public:
     void run() override;
 
 protected:
-
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 };
@@ -693,16 +652,15 @@ public:
     void update() override;
 
     void run() override;
-     // var_info for holding parameter information
- 
-   protected:
-  
-   int16_t target_alt_with_sea;
-   int16_t level_alt_cm; 
-   //bool takeoff_started;
-   //Location start_loc;
+    // var_info for holding parameter information
 
-   
+protected:
+    int16_t target_alt_with_sea;
+    int16_t level_alt_cm;
+
+    // bool takeoff_started;
+    // Location start_loc;
+
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 };
@@ -710,7 +668,6 @@ public:
 class ModeQRTL : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::QRTL; }
     const char *name() const override { return "QRTL"; }
     const char *name4() const override { return "QRTL"; }
@@ -731,13 +688,12 @@ public:
     float get_VTOL_return_radius() const;
 
 protected:
-
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 
 private:
-
-    enum class SubMode {
+    enum class SubMode
+    {
         climb,
         RTL,
     } submode;
@@ -746,7 +702,6 @@ private:
 class ModeQAcro : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::QACRO; }
     const char *name() const override { return "QACRO"; }
     const char *name4() const override { return "QACO"; }
@@ -761,7 +716,6 @@ public:
     void run() override;
 
 protected:
-
     bool _enter() override;
 };
 
@@ -769,7 +723,6 @@ protected:
 class ModeQAutotune : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::QAUTOTUNE; }
     const char *name() const override { return "QAUTOTUNE"; }
     const char *name4() const override { return "QATN"; }
@@ -783,15 +736,14 @@ public:
     void update() override;
 
 protected:
-
     bool _enter() override;
     void _exit() override;
 };
-#endif  // QAUTOTUNE_ENABLED
+#endif // QAUTOTUNE_ENABLED
 
-#endif  // HAL_QUADPLANE_ENABLED
+#endif // HAL_QUADPLANE_ENABLED
 
-class ModeTakeoff: public Mode
+class ModeTakeoff : public Mode
 {
 public:
     ModeTakeoff();
@@ -799,6 +751,9 @@ public:
     Number mode_number() const override { return Number::TAKEOFF; }
     const char *name() const override { return "TAKEOFF"; }
     const char *name4() const override { return "TKOF"; }
+    // в mode.h всередині класу ModeTakeoff:
+    int16_t get_target_dist(); 
+
 
     // methods that affect movement of the vehicle in this mode
     void update() override;
@@ -830,10 +785,9 @@ protected:
 
 #if HAL_SOARING_ENABLED
 
-class ModeThermal: public Mode
+class ModeThermal : public Mode
 {
 public:
-
     Number mode_number() const override { return Number::THERMAL; }
     const char *name() const override { return "THERMAL"; }
     const char *name4() const override { return "THML"; }
@@ -855,7 +809,6 @@ public:
     bool does_auto_throttle() const override { return true; }
 
 protected:
-
     bool exit_heading_aligned() const;
     void restore_mode(const char *reason, ModeReason modereason);
 
