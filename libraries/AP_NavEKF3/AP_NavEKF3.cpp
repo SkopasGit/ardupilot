@@ -1012,7 +1012,14 @@ void NavEKF3::UpdateFilter(void)
   using a different EKF lane
 */
 void NavEKF3::checkLaneSwitch(void)
+
 {
+    
+    if (AP::gps().status() < AP_GPS::GPS_OK_FIX_3D){
+        return;
+    }
+    
+    
     AP::dal().log_event3(AP_DAL::Event::checkLaneSwitch);
 
     uint32_t now = AP::dal().millis();
