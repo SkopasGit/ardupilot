@@ -14,7 +14,7 @@ bool ModeFBWB::_enter()
     else{
     plane.set_target_altitude_current();
     }
-    gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %.1d m",plane.target_altitude.amsl_cm);
+    gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %.1ld m",plane.target_altitude.amsl_cm);
     return true;
 }
 
