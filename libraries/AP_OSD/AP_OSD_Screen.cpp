@@ -2484,7 +2484,7 @@ void AP_OSD_Screen::draw_vtx_power(uint8_t x, uint8_t y)
     uint16_t powr = 0;
     // If currently in pit mode, just render 0mW to the screen
     if(!vtx->has_option(AP_VideoTX::VideoOptions::VTX_PITMODE)){
-        powr = vtx->get_power_mw();
+        powr = vtx->get_configured_power_mw();
     }
     backend->write(x, y, !vtx->is_configuration_finished(), "%4hu%c", powr, SYMBOL(SYM_MW));
 }
