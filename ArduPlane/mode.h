@@ -473,7 +473,7 @@ public:
     Number mode_number() const override { return Number::FLY_BY_WIRE_B; }
     const char *name() const override { return "FLY_BY_WIRE_B"; }
     const char *name4() const override { return "FBWB"; }
-
+    bool FBWB_init = false; // для ініціалізації FBWB
     bool allows_terrain_disable() const override { return true; }
 
     bool does_automatic_thermal_switch() const override { return true; }

@@ -1,0 +1,18 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f282c7a57a7 in __GI___wait4 (pid=5248, stat_loc=stat_loc@entry=0x7ffcb14378e8, options=options@entry=0, usage=usage@entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+
+warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+Saved corefile ap-5251.core
+A debugging session is active.
+
+	Inferior 1 [process 5212] will be detached.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 5212) detached]

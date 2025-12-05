@@ -14,15 +14,16 @@ bool ModeFBWB::_enter()
     else{
     plane.set_target_altitude_current();
     }
-    gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %.1ld m",plane.target_altitude.amsl_cm);
+    gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %.1d m",plane.target_altitude.amsl_cm);
     return true;
+   // FBWB_init = false; // Ініціалізація FBWB
 }
 
 void ModeFBWB::update()
 {
-    if (!gps_disabled)
+    if (FBWB_init == false)
     {
-        // Перевірка переходу з Q_TAKEOFF
+    // Перевірка переходу з Q_TAKEOFF
         if (plane.previous_mode == &plane.mode_qtakeoff)
         {
             if (!quadplane.in_transition() && plane.get_mode() == Mode::FLY_BY_WIRE_B)
@@ -50,25 +51,20 @@ void ModeFBWB::update()
                     else if ((AP_HAL::millis() - ekf_stable_start_ms) > 5000)
                     {
                         gcs().send_text(MAV_SEVERITY_INFO, "FBWB: EKF stable, disabling GPS");
-
-                        AP::gps().force_disable(true);
-                        gps_disabled = true; // щоб знову не виконувалося
+                        FBWB_init= true; // Ініціалізація FBWB завершена
+                        //AP::gps().force_disable(true);
+                        
                     }
                 }
                 else
                 {
                     ekf_stable_start_ms = 0;
-
-                    // Детальний лог стану
-                  /*  gcs().send_text(MAV_SEVERITY_WARNING,
-                        "EKF: healthy=%d, ahrs=%d, inertial=%d, loc=%d, vel=%d, vib=%d, gps=%d",
-                        ekf3_healthy, ahrs_healthy, has_inertial_nav, has_location,
-                        has_velocity, not_vibration_affected, gps_ok);*/
+   
                 }
             }
         }
-    }
-
+    
+    }   
     // Управління каналами
     plane.nav_roll_cd = plane.channel_roll->norm_input() * plane.roll_limit_cd;
     plane.update_load_factor();
