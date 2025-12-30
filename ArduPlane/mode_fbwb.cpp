@@ -14,7 +14,12 @@ bool ModeFBWB::_enter()
     else{
     plane.set_target_altitude_current();
     }
+<<<<<<< HEAD
     gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %.1d m",plane.target_altitude.amsl_cm);
+=======
+    int32_t target_alt_m = plane.target_altitude.amsl_cm/100; 
+    gcs().send_text(MAV_SEVERITY_INFO, "Target Alt AMSL: %ld m",long(target_alt_m));
+>>>>>>> a62723116c (Change alt Ignore modules/littlefs)
     return true;
 }
 
