@@ -29,16 +29,14 @@ MAV_MODE GCS_MAVLINK_Tracker::base_mode() const
     case Mode::Number::SERVOTEST:
     case Mode::Number::AUTO:
     case Mode::Number::GUIDED:
+    case Mode::Number::ASSIST:   // 👈 ОЦЕ ДОДАЄМО
         _base_mode |= MAV_MODE_FLAG_GUIDED_ENABLED |
             MAV_MODE_FLAG_STABILIZE_ENABLED;
-        // note that MAV_MODE_FLAG_AUTO_ENABLED does not match what
-        // APM does in any mode, as that is defined as "system finds its own goal
-        // positions", which APM does not currently do
         break;
 
     case Mode::Number::INITIALISING:
         break;
-    }
+}
 
     // we are armed if safety switch is not disarmed
     if (hal.util->safety_switch_state() != AP_HAL::Util::SAFETY_DISARMED &&

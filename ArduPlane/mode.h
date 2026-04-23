@@ -53,6 +53,7 @@ public:
         QLOITER       = 19,
         QLAND         = 20,
         QRTL          = 21,
+        QTAKEOFF = 100,
 #if QAUTOTUNE_ENABLED
         QAUTOTUNE     = 22,
 #endif
@@ -570,7 +571,8 @@ public:
     void update_target_altitude() override {};
 
 protected:
-
+    uint32_t ekf_stable_start_ms = 0; // момент, коли EKF3 став стабільним
+    bool gps_disabled = false;        // чи вже вимкнули GPS
     bool _enter() override;
 };
 
@@ -667,6 +669,10 @@ private:
 
 class ModeQHover : public Mode
 {
+    friend class QuadPlane;
+    friend class ModeQTakeOff;
+    friend class Plane;
+ 
 public:
 
     Number mode_number() const override { return Number::QHOVER; }
@@ -748,7 +754,31 @@ protected:
     bool _enter() override;
     bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
 };
+class ModeQTakeOff : public Mode
+{
+public:
+    Number mode_number() const override { return Number::QTAKEOFF; }
+    const char *name() const override { return "QTAKEOFF"; }
+    const char *name4() const override { return "QTKF"; }
 
+    bool is_vtol_mode() const override { return true; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+
+    void run() override;
+    // var_info for holding parameter information
+
+protected:
+    int16_t target_alt_with_sea;
+    int16_t level_alt_cm;
+
+    // bool takeoff_started;
+    // Location start_loc;
+
+    bool _enter() override;
+    bool _pre_arm_checks(size_t buflen, char *buffer) const override { return false; }
+};
 class ModeQRTL : public Mode
 {
 public:
@@ -841,6 +871,8 @@ public:
     Number mode_number() const override { return Number::TAKEOFF; }
     const char *name() const override { return "TAKEOFF"; }
     const char *name4() const override { return "TKOF"; }
+    // в mode.h всередині класу ModeTakeoff:
+    int16_t get_target_dist(); 
 
     // methods that affect movement of the vehicle in this mode
     void update() override;

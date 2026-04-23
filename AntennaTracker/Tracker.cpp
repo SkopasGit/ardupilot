@@ -149,6 +149,9 @@ Mode *Tracker::mode_from_mode_num(const Mode::Number num)
     case Mode::Number::INITIALISING:
         ret = &mode_initialising;
         break;
+    case Mode::Number::ASSIST:
+        ret = &mode_assist;
+        break;    
     }
     return ret;
 }

@@ -157,49 +157,107 @@ void Tracker::update_yaw_servo(float yaw)
  */
 void Tracker::update_yaw_position_servo()
 {
-    int32_t yaw_limit_cd = g.yaw_range*100/2;
+    const int32_t yaw_limit_cd = g.yaw_range * 100 / 2;
 
-    // Antenna as Ballerina. Use with antenna that do not have continuously rotating servos, ie at some point in rotation
-    // the servo limits are reached and the servo has to slew 360 degrees to the 'other side' to keep tracking.
-    //
-    // This algorithm accounts for the fact that the antenna mount may not be aligned with North
-    // (in fact, any alignment is permissible), and that the alignment may change (possibly rapidly) over time
-    // (as when the antenna is mounted on a moving, turning vehicle)
-    //
-    // With my antenna mount, large pwm output drives the antenna anticlockwise, so need:
-    // param set RC1_REV -1
-    // to reverse the servo. Yours may be different
-    //
-    // You MUST set RC1_MIN and RC1_MAX so that your servo drives the antenna azimuth from -180 to 180 relative
-    // to the mount.
-    // To drive my HS-645MG servos through their full 180 degrees of rotational range and therefore the
-    // antenna through a full 360 degrees, I have to set:
-    // param set RC1_MAX 2380
-    // param set RC1_MIN 680
-    // According to the specs at https://www.servocity.com/html/hs-645mg_ultra_torque.html,
-    // that should be 600 through 2400, but the azimuth gearing in my antenna pointer is not exactly 2:1
+    const float current_servo_out =
+        SRV_Channels::get_output_scaled(SRV_Channel::k_tracker_yaw);
 
-    /*
-      a positive error means that we need to rotate clockwise
-      a negative error means that we need to rotate counter-clockwise
+    // ------------------------------------------------------------
+    // 1. Якщо зараз у режимі реверсу - примусово женемо серву
+    //    до ПРОТИЛЕЖНОГО краю
+    // ------------------------------------------------------------
+    if (this->yaw_reversing) {
+    const float slew_time = MAX(g.yaw_slew_time, 0.1f);
+    const float reverse_rate_cd_per_sec = (g.yaw_range * 100.0f) / slew_time;
+    const float step_cd = reverse_rate_cd_per_sec * G_Dt;
 
-      Use our current yawspeed to determine if we are moving in the
-      right direction
-     */
+    // цільовий край, куди треба прийти
+    const float target_servo_out = (this->yaw_reverse_dir < 0) ? -yaw_limit_cd : yaw_limit_cd;
 
+    float new_servo_out = current_servo_out;
+
+    // рух до цілі без перелітання
+    if (target_servo_out > current_servo_out) {
+        new_servo_out = MIN(current_servo_out + step_cd, target_servo_out);
+    } else if (target_servo_out < current_servo_out) {
+        new_servo_out = MAX(current_servo_out - step_cd, target_servo_out);
+    }
+
+    new_servo_out = constrain_float(new_servo_out, -yaw_limit_cd, yaw_limit_cd);
+
+    SRV_Channels::set_output_scaled(SRV_Channel::k_tracker_yaw, new_servo_out);
+
+    if (yaw_servo_out_filt_init) {
+        yaw_servo_out_filt.apply(new_servo_out, G_Dt);
+    } else {
+        yaw_servo_out_filt.reset(new_servo_out);
+        yaw_servo_out_filt_init = true;
+    }
+
+    const uint32_t reverse_time_ms =
+        (uint32_t)(MAX(g.min_reverse_time, 0.0f) * 1000.0f);
+
+    const bool time_ok =
+        (AP_HAL::millis() - this->yaw_reverse_start_ms) >= reverse_time_ms;
+
+    const bool reached_opposite_limit =
+        is_equal(new_servo_out, target_servo_out);
+
+    if (time_ok && reached_opposite_limit) {
+        this->yaw_reversing = false;
+        this->yaw_reverse_dir = 0;
+        g.pidYaw2Srv.reset_I();
+    }
+
+    return;
+}
+
+    // ------------------------------------------------------------
+    // 2. Звичайний PID-режим
+    // ------------------------------------------------------------
+    float err = nav_status.angle_error_yaw;
+
+// DEAD BAND (в градусах → переводимо в centideg)
+    const float deadband_cd = g.yaw_deadband * 100.0f;
+
+    if (fabsf(err) < deadband_cd) {
+       g.pidYaw2Srv.reset_I();   // обов'язково!
+       return;
+    }
     float servo_change = g.pidYaw2Srv.update_error(nav_status.angle_error_yaw, G_Dt);
     servo_change = constrain_float(servo_change, -18000, 18000);
-    float new_servo_out = constrain_float(SRV_Channels::get_output_scaled(SRV_Channel::k_tracker_yaw) + servo_change, -18000, 18000);
 
-    // position limit yaw servo
-    if (new_servo_out <= -yaw_limit_cd) {
-        new_servo_out = -yaw_limit_cd;
+    float new_servo_out = current_servo_out + servo_change;
+    new_servo_out = constrain_float(new_servo_out, -18000, 18000);
+
+    // ------------------------------------------------------------
+    // 3. Якщо вперлись у правий ліміт і PID далі штовхає вправо,
+    //    запускаємо повний обхід уліво
+    // ------------------------------------------------------------
+    if (new_servo_out >= yaw_limit_cd && nav_status.angle_error_yaw > 0) {
+        this->yaw_reversing = true;
+        this->yaw_reverse_dir = -1;
+        this->yaw_reverse_start_ms = AP_HAL::millis();
         g.pidYaw2Srv.reset_I();
+        return;
     }
-    if (new_servo_out >= yaw_limit_cd) {
-        new_servo_out = yaw_limit_cd;
+
+    // ------------------------------------------------------------
+    // 4. Якщо вперлись у лівий ліміт і PID далі штовхає вліво,
+    //    запускаємо повний обхід управо
+    // ------------------------------------------------------------
+    if (new_servo_out <= -yaw_limit_cd && nav_status.angle_error_yaw < 0) {
+        this->yaw_reversing = true;
+        this->yaw_reverse_dir = +1;
+        this->yaw_reverse_start_ms = AP_HAL::millis();
         g.pidYaw2Srv.reset_I();
+        return;
     }
+
+    // ------------------------------------------------------------
+    // 5. Нормальний запис у вихід
+    // ------------------------------------------------------------
+    new_servo_out = constrain_float(new_servo_out, -yaw_limit_cd, yaw_limit_cd);
 
     SRV_Channels::set_output_scaled(SRV_Channel::k_tracker_yaw, new_servo_out);
 
@@ -210,7 +268,6 @@ void Tracker::update_yaw_position_servo()
         yaw_servo_out_filt_init = true;
     }
 }
-
 
 /**
    update the yaw (azimuth) servo. The aim is to drive the boards ahrs

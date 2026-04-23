@@ -207,6 +207,14 @@ const AP_Param::Info Tracker::var_info[] = {
     // @Range: 0 90
     // @User: Standard
     GSCALAR(pitch_max,               "PITCH_MAX",	PITCH_MAX_DEFAULT),
+    // @Param: YAW_DEADBAND
+    // @DisplayName: Yaw deadband
+    // @Description: Minimum yaw error before the tracker moves the yaw servo. Value is in degrees.
+    // @Range: 0 30
+    // @Increment: 0.1
+    // @Units: deg
+    // @User: Advanced
+    GSCALAR(yaw_deadband, "YAW_DEADBAND", 2.0),
 
     // barometer library
     // @Group: BARO

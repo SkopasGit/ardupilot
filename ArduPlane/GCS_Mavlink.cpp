@@ -44,6 +44,7 @@ MAV_MODE GCS_MAVLINK_Plane::base_mode() const
     case Mode::Number::QHOVER:
     case Mode::Number::QLOITER:
     case Mode::Number::QLAND:
+    case Mode::Number::QTAKEOFF:
 #if QAUTOTUNE_ENABLED
     case Mode::Number::QAUTOTUNE:
 #endif
@@ -62,6 +63,8 @@ MAV_MODE GCS_MAVLINK_Plane::base_mode() const
 #if HAL_QUADPLANE_ENABLED
     case Mode::Number::QRTL:
     case Mode::Number::LOITER_ALT_QLAND:
+    //case Mode::Number::QTAKEOFF:
+
 #endif
         _base_mode = MAV_MODE_FLAG_GUIDED_ENABLED |
                      MAV_MODE_FLAG_STABILIZE_ENABLED;
@@ -70,6 +73,9 @@ MAV_MODE GCS_MAVLINK_Plane::base_mode() const
         // positions", which APM does not currently do
         break;
     case Mode::Number::INITIALISING:
+        break;
+         default:
+        // на всякий випадок: нові або неочікувані режими
         break;
     }
 

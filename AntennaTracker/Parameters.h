@@ -133,7 +133,10 @@ public:
         k_param_logger = 253, // 253 - Logging Group
 
         k_param_vehicle = 257, // vehicle common block of parameters
+        k_param_yaw_deadband,
+	
     };
+
 
     AP_Int16 format_version;
 
@@ -151,6 +154,7 @@ public:
 
     AP_Float start_latitude;
     AP_Float start_longitude;
+    AP_Float yaw_deadband;       // Minimum yaw error before the tracker moves the yaw servo.
 
     AP_Float startup_delay;
     AP_Int8  servo_pitch_type;

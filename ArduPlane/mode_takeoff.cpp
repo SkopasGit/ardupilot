@@ -22,7 +22,7 @@ const AP_Param::GroupInfo ModeTakeoff::var_info[] = {
     // @Increment: 1
     // @Units: m
     // @User: Standard
-    AP_GROUPINFO("LVL_ALT", 2, ModeTakeoff, level_alt, 10),
+    AP_GROUPINFO("LVL_ALT", 2, ModeTakeoff, level_alt, 5),
 
     // @Param: LVL_PITCH
     // @DisplayName: Takeoff mode altitude initial pitch
@@ -59,9 +59,22 @@ ModeTakeoff::ModeTakeoff() :
 {
     AP_Param::setup_object_defaults(this, var_info);
 }
+int16_t ModeTakeoff::get_target_dist()
+{
+    if (target_dist<50){
+        return 50;
+    }else{
+        return target_dist;
+    }
+
+}
 
 bool ModeTakeoff::_enter()
 {
+    #if HAL_QUADPLANE_ENABLED
+     return plane.set_mode(Mode::QTAKEOFF, ModeReason::MISSION_CMD);
+     
+    #endif
     takeoff_mode_setup = false;
     have_autoenabled_fences = false;
 

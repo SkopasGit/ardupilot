@@ -62,6 +62,7 @@ public:
     friend class Parameters;
     friend class ModeAuto;
     friend class ModeGuided;
+    friend class ModeAssist;
     friend class Mode;
 
     void arm_servos();
@@ -81,9 +82,14 @@ private:
     LowPassFilterFloat yaw_servo_out_filt;
     LowPassFilterFloat pitch_servo_out_filt;
 
+
     bool yaw_servo_out_filt_init = false;
     bool pitch_servo_out_filt_init = false;
-
+    // balerina
+    bool yaw_reversing = false;
+    int8_t yaw_reverse_dir = 0;      // -1 або +1
+    uint32_t yaw_reverse_start_ms = 0;
+    
     GCS_Tracker _gcs; // avoid using this; use gcs()
     GCS_Tracker &gcs() { return _gcs; }
 
@@ -104,6 +110,7 @@ private:
     ModeScan mode_scan;
     ModeServoTest mode_servotest;
     ModeStop mode_stop;
+    ModeAssist mode_assist;
 
     // Vehicle state
     struct {

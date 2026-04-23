@@ -11,6 +11,7 @@ public:
         SCAN=2,
         SERVOTEST=3,
         GUIDED=4,
+        ASSIST=5,
         AUTO=10,
         INITIALISING=16
     };
@@ -61,6 +62,20 @@ private:
     Quaternion _target_att;
     bool _use_yaw_rate;
     float _yaw_rate_rads;
+};
+
+class ModeAssist : public Mode {
+public:
+    Mode::Number number() const override { return Mode::Number::ASSIST; }
+    bool requires_armed_servos() const override { return true; }
+    void update() override;
+
+    void init_targets_from_current_attitude();
+
+private:
+    float _target_yaw_cd = 0.0f;     // centidegrees
+    float _target_pitch_cd = 0.0f;   // centidegrees
+    bool _target_initialized = false;
 };
 
 class ModeInitialising : public Mode {
